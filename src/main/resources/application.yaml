@@ -1,0 +1,67 @@
+epost:
+  openapi:
+    proxy:
+      service-key: ${SERVICE_KEY}
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - gateway
+#  endpoint:
+#    gateway:
+#      enabled: true
+#    health:
+#      show-details: always
+
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/global-filters.html#local-cache-response-global-filter
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html
+# https://cloud.spring.io/spring-cloud-gateway/reference/html/appendix.html#common-application-properties
+spring:
+  application:
+    name: epost-openapi-proxy-sample-application
+  cloud:
+    gateway:
+      filter:
+        local-response-cache:
+          enabled: true    # default: false
+          size: 32MB       # default: not-specified
+          time-to-live: 8m # default: 5m
+      global-filter:
+        local-response-cache:
+          enabled: true    # default: true
+      httpclient:
+        # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+        connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
+        response-timeout: PT8S # response-timeout must be specified as a java.time.Duration
+        wiretap: true
+      httpserver:
+        wiretap: true
+  profiles:
+    default: development
+    group:
+      development:
+        - dev
+      production:
+        - dev
+        - prod
+
+springdoc:
+  show-actuator: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: application-development.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: classpath:application-production.yaml
