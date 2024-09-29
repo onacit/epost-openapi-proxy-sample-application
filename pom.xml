@@ -4,7 +4,7 @@
 
   <groupId>com.github.onacit</groupId>
   <artifactId>epost-openapi-proxy-sample-application</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <name>${project.artifactId}</name>
@@ -16,7 +16,7 @@
     <connection>scm:git:git@github.com:onacit/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:onacit/${project.artifactId}.git</developerConnection>
     <url>https://github.com/onacit/${project.artifactId}</url>
-    <tag>HEAD</tag>
+    <tag>epost-openapi-proxy-sample-application-0.0.1</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
